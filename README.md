@@ -8,6 +8,8 @@ This is a Data Visualization project for MemoryError Drop Logs that's built usin
 - Supports clearing the logfile from the UI
 - Auto-refreshes every 5 minutes
 
+![alt text](image.png)
+
 ## Configuration
 
 Copy [env.example](https://github.com/deadcodes/METrics/blob/master/env.example) over to a new file '.env' and fill in the database name.
