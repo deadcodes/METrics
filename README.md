@@ -10,13 +10,13 @@ This is a Data Visualization project for MemoryError Drop Logs that's built usin
 
 ## Configuration
 
-Copy [env.example]() over to '.env' and fill in the database name.
+Copy [env.example](https://github.com/deadcodes/METrics/blob/master/env.example) over to a new file '.env' and fill in the database name.
 
 ## Running locally in development mode
 
 To get started, just clone the repository and run `npm install && npm run dev`:
 
-    git clone https://github.com/iaincollins/nextjs-starter.git
+    git clone https://github.com/deadcodes/METrics.git
     npm install
     npm run db:init
     npm run dev
