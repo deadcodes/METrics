@@ -27,7 +27,8 @@ This is a Data Visualization project for MemoryError Drop Logs that's built usin
 
 Copy [env.example](https://github.com/deadcodes/METrics/blob/master/env.example) over to a new file '.env' and fill in the database name.
 
-When it asks for a `Log Directory` path, provide the path to the `Drops` folder  in `MemoryError` in `Documents`
+> [!IMPORTANT]
+> When it asks for a `Log Directory` path, provide the path to the `Drops` folder  in `MemoryError` in `Documents`
 > `C:\Users\YOUR_WINDOWS_ACCOUNT_NAME_HERE\Documents\MemoryError\Drops`
 
 ---
