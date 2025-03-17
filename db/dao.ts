@@ -122,7 +122,6 @@ export const shouldUpdateGEData = async (): Promise<boolean> => {
 }
 
 export const updateGEData = async (): Promise<void> => {
-    console.log('updateGEData', Date.now())
     shouldUpdateGEData().then(should => {
         if (should) {
             getAllGEPrices().then(geData => {
@@ -150,22 +149,22 @@ export const updateGEData = async (): Promise<void> => {
     })
 }
 
-export const getPathFromDB = async():Promise<string | undefined> => {
-    console.log('getPathFromDB', Date.now()) 
+export const getPathFromDB = async (): Promise<string | undefined> => {
+    console.log('getPathFromDB', Date.now())
     try {
         const settingsData = await db.select().from(settings).limit(1)
-        if(settingsData.length) {
+        if (settingsData.length) {
             return settingsData[0].path
         }
-    } catch (e) {console.log('getPathFromDB died', e); return undefined}
+    } catch (e) { console.log('getPathFromDB died', e); return undefined }
     return undefined
 }
 
-export const setPathInDB = async(path:string): Promise<void> => {
-    console.log('setPathInDB',path) 
+export const setPathInDB = async (path: string): Promise<void> => {
+    console.log('setPathInDB', path)
     try {
         const data = { id: 0, path: path, updated: Date.now() }
         const status = await db.insert(settings).values(data).onConflictDoUpdate({ target: settings.id, set: { ...data, id: sql`${settings.id}` } });
         console.log('setPathInDB result', status)
-    } catch (e) {console.log('setPathInDB died', e); return undefined}
+    } catch (e) { console.log('setPathInDB died', e); return undefined }
 }

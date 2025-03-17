@@ -20,3 +20,13 @@ export interface ItemDBRow {
   stackable: boolean
   geLastUpdated: number
 }
+
+export interface Item {
+  id:number
+  name:string
+  tradable: boolean
+  isOnGE:boolean
+  value:number
+  alch:number
+  stackable:boolean
+}

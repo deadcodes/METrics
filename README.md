@@ -5,6 +5,8 @@ This is a Data Visualization project for MemoryError Drop Logs that's built usin
 - Uses a SQLite database to store Item information and configuration
 - Automatically updates G.E pricing information when Runescape updates it
 - Supports metrics computation for all users or specific users
+- Supports clearing the logfile from the UI
+- Auto-refreshes every 5 minutes
 
 ## Configuration
 
@@ -30,19 +32,19 @@ Steps to update
     - Click on the Settings icon in the top right and select **JavaScript**
     - Paste the below function in the `Query`
         ```javascript
-        function query (data) {
-        return _.chain(data)
-        .orderBy(['id'], ['asc'])
-        .map(item => ({
-        "id": item?.id,
-        "name": item?.name,
-        "tradeable": item?.notTradeable || false,
-        "isOnGE": item?.is_on_ge || false,
-        "value": item?.value || 0,      
-        "alch": 0,
-        "stackable":item?.stackableAlways || false,
-        }))
-        .value()
+        function query(data) {
+            return _.chain(data)
+                .orderBy(['id'], ['asc'])
+                .map(item => ({
+                    "id": item?.id,
+                    "name": item?.name,
+                    "tradeable": item?.notTradeable || false,
+                    "isOnGE": item?.is_on_ge || false,
+                    "value": item?.value || 0,
+                    "alch": item?.value ? item.value * 0.6 : 0,
+                    "stackable": item?.stackableAlways || false,
+                }))
+                .value()
         }
         ```
     - Click **Transform** in the bottom right of the modal
@@ -70,3 +72,4 @@ Note: If you are already running a webserver on port 80 (e.g. Macs usually have 
 * [ ] Method to generate `items.json` providing an input url
 * [ ] Have page refresh initiated from the server side when logfile updates
 * [ ] More accurate calculation of GP/hr across long durations
+* [ ] Memoization to reduce method calls

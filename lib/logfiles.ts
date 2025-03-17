@@ -26,7 +26,6 @@ export async function getAllUsersHydratedLogData(path: string): Promise<Hydrated
     users.map(d => {
         try {
             const filePath = `${path}\\${d}.log`
-            console.log('filePath', filePath)
             const res = fs.readFileSync(filePath);
             data += res.toString();
         } catch (e) {
@@ -59,18 +58,20 @@ export async function getHydratedUserLogData(path: string, username: string): Pr
 
 // Clear log file for a specific user
 export async function clearUserLogFile(path: string, username: string): Promise<boolean> {
+    const filepath = `${path}\\${username}.log`
     try {
         // In a real implementation, we would use the fs module to clear or reset the log file
         // For this demo, we'll simulate clearing the log file
-        console.log(`Clearing log file for user ${username} in directory ${path}`)
-
+        console.log(`Clearing log file ${filepath}`)
+            fs.writeFileSync(filepath,'')
+            console.log('file cleared')
+            return true
         // Simulate processing delay
-        await new Promise((resolve) => setTimeout(resolve, 1000))
+        // await new Promise((resolve) => setTimeout(resolve, 1000))
 
         // Return success
-        return true
     } catch (error) {
-        console.error(`Error clearing log file for user ${username}:`, error)
+        console.error(`Error clearing file: ${filepath}`, error)
         return false
     }
 }

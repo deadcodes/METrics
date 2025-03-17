@@ -111,7 +111,9 @@ export function Dashboard() {
       setUsers(availableUsers)
       console.log('handleDirectorySelect', path, availableUsers)
       if (availableUsers.length > 0) {
-        setPathInDB(path)
+        if (path !== logfileDir) {
+          setPathInDB(path)
+        }
       }
       // Always select "all" users by default
       handleUserChange("all")
@@ -125,8 +127,10 @@ export function Dashboard() {
   }
 
   const handleDirectoryUpdate = async (newDirectory: string) => {
+    if (newDirectory !== logfileDir) {
+      setPathInDB(newDirectory)
+    }
     logfileDir = newDirectory
-    setPathInDB(newDirectory)
     setIsDirectoryInputOpen(false)
     await handleDirectorySelect(newDirectory)
   }
