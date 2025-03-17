@@ -20,20 +20,17 @@ import { ToastContextProvider } from "./ui/toast-context"
 import { ItemDetails } from "./item-details"
 
 let logfileDir: string
-(async () => {
-  const settings = await getPathFromDB()
-  if (settings) {
-    logfileDir = settings
-  }
-})()
+interface DashboardProps {
+  dir: string
+}
 
-export function Dashboard() {
+export function Dashboard({dir} : DashboardProps) {
   const [users, setUsers] = useState<string[]>([])
   const [selectedUser, setSelectedUser] = useState<string>("all") // Default to "all"
   const [entries, setEntries] = useState<HydratedLogEntry[]>([])
   const [filteredEntries, setFilteredEntries] = useState<HydratedLogEntry[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const [selectedDirectory, setSelectedDirectory] = useState("")
+  const [selectedDirectory, setSelectedDirectory] = useState(dir)
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date())
   const [isDirectoryPromptOpen, setIsDirectoryPromptOpen] = useState(false)
   const [isDirectoryInputOpen, setIsDirectoryInputOpen] = useState(false)

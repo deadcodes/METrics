@@ -1,10 +1,11 @@
 import { Dashboard } from "@/components/dashboard"
-import { initDB } from "@/db/dao"
-export default function Home() {
+import { getPathFromDB, initDB } from "@/db/dao"
+export default async function Home() {
 initDB()
+const settings = await getPathFromDB()
   return (
     <div className="min-h-screen bg-background">
-      <Dashboard />
+      <Dashboard dir={settings || ""}/>
     </div>
   )
 }
