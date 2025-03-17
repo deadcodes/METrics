@@ -8,6 +8,12 @@ This is a Data Visualization project for MemoryError Drop Logs that's built usin
 - Supports clearing the logfile from the UI
 - Auto-refreshes every 5 minutes
 
+
+> To push data from ME so it is accessible here, you need to call the below method
+>   ```lua
+>       API.LogDrop(item.id, item.quantity)
+>   ```
+
 ![alt text](image.png)
 
 ## Configuration
