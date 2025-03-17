@@ -14,11 +14,23 @@ This is a Data Visualization project for MemoryError Drop Logs that's built usin
 >       API.LogDrop(item.id, item.quantity)
 >   ```
 
+<details>
+<summary>Example VIew</summary>
+
 ![alt text](image.png)
+
+</details>
+
+---
 
 ## Configuration
 
 Copy [env.example](https://github.com/deadcodes/METrics/blob/master/env.example) over to a new file '.env' and fill in the database name.
+
+When it asks for a `Log Directory` path, provide the path to the `Drops` folder  in `MemoryError` in `Documents`
+> `C:\Users\YOUR_WINDOWS_ACCOUNT_NAME_HERE\Documents\MemoryError\Drops`
+
+---
 
 ## Running locally in development mode
 
@@ -29,11 +41,14 @@ To get started, just clone the repository and run `npm install && npm run dev`:
     npm run db:init
     npm run dev
 
+---
 
 ## Upkeep
 
 - You have to update the `items.json` when the game updates (new items are added to the game)
-Steps to update
+    <details>
+    <summary>Steps to update</summary>
+
     - Download the `items` file from [here](https://chisel.weirdgloop.org/gazproj/cache)
     - Upload it into this [Json Editor](https://jsoneditoronline.org/)
     - Click on `Transform`
@@ -58,9 +73,11 @@ Steps to update
     - Click **Transform** in the bottom right of the modal
     - Click on the **Compact Json** button on the right pane
     - Copy the editor contents in the right window and update the `items.json`
-
+    </details>
 
 - Managing the logfiles is upto you. When data becomes too much, the application may slowdown
+
+---
 
 ## Building and deploying in production
 
@@ -74,6 +91,8 @@ If you wanted to run this site in production, you should install modules then bu
 You should run `npm run build` again any time you make changes to the site.
 
 Note: If you are already running a webserver on port 80 (e.g. Macs usually have the Apache webserver running on port 80) you can still start the example in production mode and a different available port is picked.
+
+---
 
 ## TODO
 
