@@ -1,0 +1,39 @@
+{
+  "1391": {
+    "name": "Ancient Relic",
+    "rarity": "Legendary",
+    "value": 5000,
+    "icon": "ancient-relic.png"
+  },
+  "21634": {
+    "name": "Magic Dust",
+    "rarity": "Common",
+    "value": 50,
+    "icon": "magic-dust.png"
+  },
+  "57523": {
+    "name": "Dragon Scale",
+    "rarity": "Rare",
+    "value": 750,
+    "icon": "dragon-scale.png"
+  },
+  "995": {
+    "name": "Gold Coin",
+    "rarity": "Common",
+    "value": 1,
+    "icon": "gold-coin.png"
+  },
+  "8842": {
+    "name": "Enchanted Gem",
+    "rarity": "Epic",
+    "value": 2500,
+    "icon": "enchanted-gem.png"
+  },
+  "3301": {
+    "name": "Mystic Orb",
+    "rarity": "Rare",
+    "value": 850,
+    "icon": "mystic-orb.png"
+  }
+}
+
