@@ -59,43 +59,6 @@ export const formatRare = (value: ItemDBRow) => {
     return value.name.toUpperCase()
 }
 
-// // Create data for heatmap of activity by hour and day
-// export function getActivityHeatmapData(entries: HydratedLogEntry[]) {
-//     // a is a hack to simplify math
-//     const dayNames = ["a", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-//     const dayMap = new Map<string, number>()
-//     dayNames.map(d => dayMap.set(d, 0))
-
-//     const heatmapData: Array<{ day: string; hour: string; value: number }> = []
-//     // Initialize the heatmap data structure
-//     for (let day = 1; day < 8; day++) {
-//         for (let hour = 0; hour < 24; hour++) {
-
-//             heatmapData.push({
-//                 day: dayNames[day],
-//                 hour: `${hour.toString().padStart(2, "0")}:00`,
-//                 value: 0,
-//             })
-//         }
-//     }
-
-//     // Count entries by day and hour
-//     for (const entry of entries) {
-//         const date = new Date(entry.timestamp * 1000)
-//         const day = date.getDay()
-//         const hour = date.getHours()
-
-//         const index = day * 24 + hour
-//         if (index < heatmapData.length) {
-//             const currentDay = dayNames[day]
-//             dayMap.set(currentDay, dayMap.get(currentDay)! + 1)
-//             heatmapData[index].value += 1
-//         }
-//     }
-//     return heatmapData
-// }
-
-
 /**
  * Transforms data for activity heatmap
  */
@@ -326,7 +289,6 @@ export function transformStackedAreaData(entries: HydratedLogEntry[]) {
 
     return { series, categories, annotations }
 }
-
 
 export function getRarityColor(rarity: string): string {
     switch ((rarity || "Unknown").toLowerCase()) {

@@ -5,7 +5,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Skeleton } from "@/components/ui/skeleton"
 import type { HydratedLogEntry } from "@/lib/types"
 import { convertToAbbreviation, getRarityColor } from "@/lib/data-transforms"
-import { Coins } from "lucide-react"
 
 interface ItemDetailsProps {
   entries: HydratedLogEntry[]

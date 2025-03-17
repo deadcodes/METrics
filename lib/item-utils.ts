@@ -1,5 +1,4 @@
 import type { Item, ItemDBRow, ItemDetail, ItemLog } from "./types"
-import itemDetails from '../item-details.json'
 // Cache for item details to avoid repeated fetches
 const itemDetailsCache: Record<string, ItemDetail> = {}
 
@@ -85,56 +84,7 @@ export function getRarityColorByPrice(price: number) {
     return "Orange";
   }
 }
-// Fetch item details from the JSON file
-export async function getItemDetails(itemId: string): Promise<ItemDetail | null> {
-  // Check if the item is already in the cache
-  if (itemDetailsCache[itemId]) {
-    return itemDetailsCache[itemId]
-  }
 
-  try {
-    // In a real implementation, this would be a fetch to an API or local file
-    const data = itemDetails
-
-    if (data[itemId]) {
-      // Convert the data format to match ItemDetail
-      const itemDetail: ItemDetail = {
-        id: Number.parseInt(itemId),
-        name: data[itemId].name,
-        price: data[itemId].value,
-        alch: Math.round(data[itemId].value * 0.6), // Simulate alch value
-        rarity: data[itemId].rarity,
-        timestamp: Date.now() / 1000, // Current timestamp
-      }
-
-      // Store in cache for future use
-      itemDetailsCache[itemId] = itemDetail
-      return itemDetail
-    }
-
-    return null
-  } catch (error) {
-    console.error(`Error fetching details for item ${itemId}:`, error)
-    return null
-  }
-}
-
-// Get all item details for a list of item IDs
-export async function getAllItemDetails(itemIds: string[]): Promise<Record<string, ItemDetail>> {
-  const uniqueIds = [...new Set(itemIds)]
-  const details: Record<string, ItemDetail> = {}
-
-  await Promise.all(
-    uniqueIds.map(async (id) => {
-      const itemDetail = await getItemDetails(id)
-      if (itemDetail) {
-        details[id] = itemDetail
-      }
-    }),
-  )
-
-  return details
-}
 
 // Calculate value per hour based on a 15-minute rolling window
 export function calculateValuePerHour(

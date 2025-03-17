@@ -14,8 +14,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
-import { clearUserLogFile } from "@/lib/file-actions"
 import { useToast } from "@/components/ui/toast-context"
+import { clearUserLogFile } from "@/lib/logfiles"
 
 interface ClearLogButtonProps {
   username: string

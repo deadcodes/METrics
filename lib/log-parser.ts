@@ -48,8 +48,3 @@ export async function hydrateItemInfoInLogs(loglines: LogEntry[]): Promise<Hydra
   } catch(e) {}
   return hydratedLogs;
 }
-// In a real implementation, you might want to add more utility functions:
-// - Filtering entries by time range
-// - Grouping entries by item ID
-// - Calculating aggregates
-

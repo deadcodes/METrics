@@ -8,28 +8,17 @@ import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { UserSelector } from "@/components/user-selector"
 import { MetricsOverview } from "@/components/metrics-overview"
-import { ItemQuantityChart } from "@/components/item-quantity-chart"
-import { ItemDistributionChart } from "@/components/item-distribution-chart"
-import { TimeSeriesChart } from "@/components/time-series-chart"
-import { ItemDetails } from "@/components/item-details"
-import { ClearLogButton } from "@/components/clear-log-button"
-import { ToastContextProvider } from "@/components/ui/toast-context"
-import { getUserLogData } from "@/lib/file-actions"
-import type { HydratedLogEntry, LogData } from "@/lib/types"
+import type { HydratedLogEntry } from "@/lib/types"
 import { Skeleton } from "./ui/skeleton"
 import { ActivityHeatmap } from "@/components/activity-heatmap"
-import { ValueQuantityScatter } from "@/components/value-quantity-scatter"
 import { StackedAreaChart } from "@/components/stacked-area-chart"
-import { ItemTreemap } from "@/components/item-treemap"
-import { MetricsRadarChart } from "@/components/metrics-radar-chart"
-import { getAllItemDetails } from "@/lib/item-utils"
 import { TimeRangeSelector, type TimeRange } from "@/components/time-range-selector"
-import { ThemeToggle } from "@/components/theme-toggle"
-import { getGEDBTimestamp, getGELastUpdated, getPathFromDB, setPathInDB } from "@/db/dao"
+import { getPathFromDB, setPathInDB } from "@/db/dao"
 import { getAllUsersHydratedLogData, getHydratedUserLogData, scanDirectory } from "@/lib/logfiles"
-import { calculateTimeSeriesData } from "@/lib/data-transforms"
-import { RarityTimeSeriesChart } from "./rarity-timeseries"
-import { IncomeOverTime } from "./income-over-time"
+import { ClearLogButton } from "./clear-log-button"
+import { ToastContextProvider } from "./ui/toast-context"
+import { ItemDetails } from "./item-details"
+
 let logfileDir: string
 (async () => {
   const settings = await getPathFromDB()
@@ -45,36 +34,35 @@ export function Dashboard() {
   const [filteredEntries, setFilteredEntries] = useState<HydratedLogEntry[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [selectedDirectory, setSelectedDirectory] = useState("")
-  const [geLastUpdated, setGeLastUpdated] = useState<Date>(new Date())
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date())
   const [isDirectoryPromptOpen, setIsDirectoryPromptOpen] = useState(false)
   const [isDirectoryInputOpen, setIsDirectoryInputOpen] = useState(false)
   const [timeRange, setTimeRange] = useState<TimeRange>({ label: "All", seconds: 0 })
 
-    // Calculate overview metrics from entries
-    const overviewMetrics = useMemo(() => {
-      if (!filteredEntries.length) {
-        return {
-          totalEntries: 0,
-          uniqueItems: 0,
-          goldValue: 0,
-          lastUpdated: new Date().toISOString(),
-        }
-      }
-
-      const rawGold = filteredEntries.filter(d => d.itemId === 995)
-      const goldValue = rawGold.reduce((sum, entry) => sum + entry.quantity, 0)
-      const uniqueItems = new Set(filteredEntries.map((entry) => entry.itemId)).size
-      const lastUpdated = new Date(Math.max(...filteredEntries.map((entry) => entry.timestamp * 1000))).toISOString()
+  // Calculate overview metrics from entries
+  const overviewMetrics = useMemo(() => {
+    if (!filteredEntries.length) {
       return {
-        totalEntries: filteredEntries.length,
-        uniqueItems,
-        goldValue,
-        lastUpdated,
+        totalEntries: 0,
+        uniqueItems: 0,
+        goldValue: 0,
+        lastUpdated: new Date().toISOString(),
       }
-    }, [filteredEntries])
+    }
 
-      // Filter entries based on selected time range
+    const rawGold = filteredEntries.filter(d => d.itemId === 995)
+    const goldValue = rawGold.reduce((sum, entry) => sum + entry.quantity, 0)
+    const uniqueItems = new Set(filteredEntries.map((entry) => entry.itemId)).size
+    const lastUpdated = new Date(Math.max(...filteredEntries.map((entry) => entry.timestamp * 1000))).toISOString()
+    return {
+      totalEntries: filteredEntries.length,
+      uniqueItems,
+      goldValue,
+      lastUpdated,
+    }
+  }, [filteredEntries])
+
+  // Filter entries based on selected time range
   useEffect(() => {
     if (!entries.length) {
       setFilteredEntries([])
@@ -93,19 +81,7 @@ export function Dashboard() {
     // Filter entries
     const filtered = entries.filter((entry) => entry.timestamp >= cutoffTime)
     setFilteredEntries(filtered)
-  }, [entries, timeRange,selectedUser])
-
-  
-  // const hydratedFiltered = useMemo(() => {
-  //   if (!logLines) return null
-  //   const now = Math.floor(Date.now() / 1000)
-  //   let cutoffTime = now - timeRange.seconds
-  //   if (timeRange.seconds === 0)
-  //     cutoffTime = new Date(0).getSeconds()
-  //   const filtered = logLines?.filter(d => d.timestamp >= cutoffTime)
-  //   // console.log('filtered', filtered)
-  //   return filtered
-  // }, [logfileDir, selectedUser, timeRange, logLines])
+  }, [entries, timeRange, selectedUser])
 
   const loadSettings = async () => {
     const settings = await getPathFromDB()
@@ -122,15 +98,8 @@ export function Dashboard() {
     }
   }
 
-  const getGetUpdated = async () => {
-    const geTimestamp = await getGELastUpdated()
-    if (geTimestamp) {
-      setGeLastUpdated(geTimestamp)
-    }
-  }
   useEffect(() => {
     loadSettings()
-    getGetUpdated()
   }, [])
 
   const handleDirectorySelect = async (path: string) => {
@@ -174,7 +143,6 @@ export function Dashboard() {
         lines = await getHydratedUserLogData(logfileDir, user)
       }
       setEntries(lines)
-      const data = await getUserLogData(selectedDirectory, user)
       setLastUpdated(new Date())
     } catch (error: any) {
       console.error("Error loading user data:", error)
@@ -185,53 +153,21 @@ export function Dashboard() {
 
   const refreshData = async (user: string = selectedUser) => {
     if (!selectedDirectory) return null
-
-    try {
-      setIsLoading(true)
-      const data = await getUserLogData(selectedDirectory, user)
-      setLastUpdated(new Date())
-      return data
-    } catch (error: any) {
-      console.error("Error refreshing data:", error)
-      return null
-    } finally {
-      setIsLoading(false)
-    }
+    handleUserChange(user)
   }
-
-  const memoizedRefreshData = useCallback(
-    async (user: string = selectedUser) => {
-      if (!selectedDirectory) return null
-
-      try {
-        setIsLoading(true)
-        const data = await getUserLogData(selectedDirectory, user)
-        setLastUpdated(new Date())
-        return data
-      } catch (error: any) {
-        console.error("Error refreshing data:", error)
-        return null
-      } finally {
-        setIsLoading(false)
-      }
-    },
-    [selectedDirectory, selectedUser, setIsLoading, setLastUpdated],
-  )
 
   useEffect(() => {
     if (!selectedDirectory) return
 
     const intervalId = setInterval(async () => {
-      const newData = await memoizedRefreshData()
-      if (newData) {
-      }
+      await refreshData()
     }, 30000)
 
     return () => clearInterval(intervalId)
-  }, [selectedUser, selectedDirectory, memoizedRefreshData])
+  }, [selectedUser, selectedDirectory, refreshData])
 
   const handleLogCleared = async () => {
-    await memoizedRefreshData()
+    await refreshData()
   }
 
   const handleTimeRangeChange = (range: TimeRange) => {
@@ -323,12 +259,12 @@ export function Dashboard() {
                   </div>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-2 items-start sm:items-center">
-                  {isLoading? (
-                      <div className="space-y-2 mt-2">
+                  {isLoading ? (
+                    <div className="space-y-2 mt-2">
                       <Skeleton className="h-3 w-[600px]" />
                     </div>
                   ) : (
-                  <TimeRangeSelector selectedRange={timeRange} onRangeChange={handleTimeRangeChange} />
+                    <TimeRangeSelector selectedRange={timeRange} onRangeChange={handleTimeRangeChange} />
                   )}
                   <Button
                     variant="outline"
@@ -342,9 +278,7 @@ export function Dashboard() {
                   </Button>
                 </div>
               </div>
-              {/* <MetricsOverview data={filteredEntries} geUpdated={geLastUpdated} isLoading={isLoading} /> */}
-              <MetricsOverview data={overviewMetrics} entries={filteredEntries} isLoading/>
-              {/* Time Series Section */}
+              <MetricsOverview data={overviewMetrics} entries={filteredEntries} isLoading />
               <div className="grid gap-6 lg:grid-cols-2">
                 <Card>
                   <CardHeader>
@@ -352,22 +286,21 @@ export function Dashboard() {
                     <CardDescription>GP earned over time, computed in 5 minute intervals</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <StackedAreaChart entries={filteredEntries}/>
+                    <StackedAreaChart entries={filteredEntries} />
                   </CardContent>
                 </Card>
                 <Card>
-                <CardHeader>
-                  <CardTitle>Activity Heatmap</CardTitle>
-                  <CardDescription>Distribution of activity by day of week and hour of day</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ActivityHeatmap data={filteredEntries} isLoading/>
-                </CardContent>
-              </Card>
-                
+                  <CardHeader>
+                    <CardTitle>Activity Heatmap</CardTitle>
+                    <CardDescription>Distribution of activity by day of week and hour of day</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <ActivityHeatmap data={filteredEntries} isLoading />
+                  </CardContent>
+                </Card>
+
               </div>
 
-              {/* Item Details Section */}
               <ItemDetails entries={filteredEntries} />
             </div>
           )}
