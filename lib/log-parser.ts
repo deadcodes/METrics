@@ -37,14 +37,14 @@ export async function hydrateItemInfoInLogs(loglines: LogEntry[]): Promise<Hydra
   try {
     loglines.map(async (d: LogEntry) => {
       const dbrow = await getItemFromDatabase(d.itemId)
-      const item:HydratedLogEntry = {
-        itemId:d.itemId,
-        quantity:d.quantity,
-        timestamp:d.timestamp,
-        item:dbrow
+      const item: HydratedLogEntry = {
+        itemId: d.itemId,
+        quantity: d.quantity,
+        timestamp: d.timestamp,
+        item: dbrow
       }
       hydratedLogs.push(item)
     })
-  } catch(e) {}
+  } catch (e) { }
   return hydratedLogs;
 }

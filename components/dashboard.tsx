@@ -161,7 +161,7 @@ export function Dashboard() {
 
     const intervalId = setInterval(async () => {
       await refreshData()
-    }, 30000)
+    }, 300000)
 
     return () => clearInterval(intervalId)
   }, [selectedUser, selectedDirectory, refreshData])
@@ -278,7 +278,7 @@ export function Dashboard() {
                   </Button>
                 </div>
               </div>
-              <MetricsOverview data={overviewMetrics} entries={filteredEntries} isLoading />
+              <MetricsOverview data={overviewMetrics} entries={filteredEntries} />
               <div className="grid gap-6 lg:grid-cols-2">
                 <Card>
                   <CardHeader>
@@ -295,12 +295,10 @@ export function Dashboard() {
                     <CardDescription>Distribution of activity by day of week and hour of day</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <ActivityHeatmap data={filteredEntries} isLoading />
+                    <ActivityHeatmap data={filteredEntries} />
                   </CardContent>
                 </Card>
-
               </div>
-
               <ItemDetails entries={filteredEntries} />
             </div>
           )}

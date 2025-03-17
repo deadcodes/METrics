@@ -20,7 +20,7 @@ export async function scanDirectory(path: string): Promise<string[]> {
     }
 }
 
-export async function getAllUsersHydratedLogData(path:string): Promise<HydratedLogEntry[]> {
+export async function getAllUsersHydratedLogData(path: string): Promise<HydratedLogEntry[]> {
     const users = await scanDirectory(path)
     let data = ""
     users.map(d => {

@@ -12,7 +12,7 @@ export function getGELastUpdatedAsync() {
           // console.log(date)
           return date
         })
-      } else { console.log('getGELastUpdated fetch failed', d.statusText);return null }
+      } else { console.log('getGELastUpdated fetch failed', d.statusText); return null }
     })
   } catch (e) { console.log('getGELastUpdated died', e) }
   return null
@@ -21,13 +21,13 @@ export function getGELastUpdatedAsync() {
 async function getGELastUpdated() {
   const url = `https://api.weirdgloop.org/exchange`
   try {
-      const data = await fetch(url)
-      if (data.ok) {
-          const rJson = await data.json()
-          const date = new Date(rJson['rs'])
-          // console.log(date)
-          return date
-      } else { console.log('getGELastUpdated fetch failed', data.statusText);return null }
+    const data = await fetch(url)
+    if (data.ok) {
+      const rJson = await data.json()
+      const date = new Date(rJson['rs'])
+      // console.log(date)
+      return date
+    } else { console.log('getGELastUpdated fetch failed', data.statusText); return null }
   } catch (e) { console.log('getGELastUpdated died', e) }
   return null
 }
@@ -51,7 +51,7 @@ export async function getAllGEPrices() {
       const rJson = await data.json();
       return rJson
     } else { console.log('getGEPrice fetch failed', data.statusText); return null }
-  }catch (e) { console.log(`getAllGEPrices fail for `,e); return null }
+  } catch (e) { console.log(`getAllGEPrices fail for `, e); return null }
 }
 
 export function getRarityColor(rarity: string): string {

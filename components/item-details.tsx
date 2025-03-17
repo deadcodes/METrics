@@ -154,21 +154,21 @@ export function ItemDetails({ entries }: ItemDetailsProps) {
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {sortedItems.filter(d => d.price !== 0).map((item) => (
                 <div key={item.id} className="flex items-center p-3 rounded-lg border">
-                <div className="w-10 h-10 rounded-md bg-muted flex items-center justify-center mr-3">
-                  <span className="text-xs">{item.id}</span>
-                </div>
-                <div className="flex-1">
-                  <h4 className={`font-medium ${getRarityClassColor(item.rarity)}`}>{item.name}</h4>
-                  <div className="flex justify-between text-sm text-muted-foreground">
-                    <span>Qty: {convertToAbbreviation(item.quantity)}</span>
-                    <span className={`font-medium ${getRarityColor(item.rarity)}`}>{item.rarity}</span>
+                  <div className="w-10 h-10 rounded-md bg-muted flex items-center justify-center mr-3">
+                    <span className="text-xs">{item.id}</span>
                   </div>
-                  <div className="flex justify-between text-sm text-muted-foreground">
-                    <span>Price: {convertToAbbreviation(item.price)}</span>
-                    <span>Total: <span className={`font-medium ${getRarityClassColor(item.rarity)}`}>{convertToAbbreviation(item.totalValue)}</span></span>
+                  <div className="flex-1">
+                    <h4 className={`font-medium ${getRarityClassColor(item.rarity)}`}>{item.name}</h4>
+                    <div className="flex justify-between text-sm text-muted-foreground">
+                      <span>Qty: {convertToAbbreviation(item.quantity)}</span>
+                      <span className={`font-medium ${getRarityColor(item.rarity)}`}>{item.rarity}</span>
+                    </div>
+                    <div className="flex justify-between text-sm text-muted-foreground">
+                      <span>Price: {convertToAbbreviation(item.price)}</span>
+                      <span>Total: <span className={`font-medium ${getRarityClassColor(item.rarity)}`}>{convertToAbbreviation(item.totalValue)}</span></span>
+                    </div>
                   </div>
                 </div>
-              </div>
               ))}
             </div>
           )}

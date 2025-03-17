@@ -12,11 +12,10 @@ interface MetricsOverviewProps {
     goldValue: number
     lastUpdated: string
   }
-  isLoading: Boolean
   entries: HydratedLogEntry[]
 }
 
-export function MetricsOverview({ data, entries, isLoading }: MetricsOverviewProps) {
+export function MetricsOverview({ data, entries }: MetricsOverviewProps) {
   const [valuePerHour, setValuePerHour] = useState<number>(0)
   const [loading, setIsLoading] = useState<boolean>(true)
   useEffect(() => {
@@ -30,8 +29,8 @@ export function MetricsOverview({ data, entries, isLoading }: MetricsOverviewPro
     } finally {
       setIsLoading(false)
     }
-  }, [entries,isLoading])
-  
+  }, [entries])
+
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
       <Card>
@@ -49,8 +48,8 @@ export function MetricsOverview({ data, entries, isLoading }: MetricsOverviewPro
           </div>
         ) : (
           <CardContent>
-          <div className="text-2xl font-bold">{data.totalEntries.toLocaleString()}</div>
-          <p className="text-xs text-muted-foreground">Log entries processed</p>
+            <div className="text-2xl font-bold">{data.totalEntries.toLocaleString()}</div>
+            <p className="text-xs text-muted-foreground">Log entries processed</p>
           </CardContent>
         )}
       </Card>

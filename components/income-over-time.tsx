@@ -2,7 +2,7 @@
 
 import { Line, XAxis, CartesianGrid, YAxis, Area, ComposedChart, Scatter } from "recharts"
 import { ChartConfig, ChartContainer, ChartTooltip } from "./ui/chart"
-import { HydratedLogEntry, ItemDBRow, ItemValue } from "@/lib/types"
+import { HydratedLogEntry, ItemValue } from "@/lib/types"
 import { formatRare, formatDate } from "@/lib/data-transforms"
 
 interface TimeSeriesChartProps {
@@ -27,7 +27,6 @@ const formatYAxisTickAny = (value: number[] | number | any) => {
   if (value.name) {
     return formatRare(value)
   }
-  // if(typeof value === "object") return formatRare(value)
   if (typeof value === "number") return formatYAxisTick(value)
   return value.map(d => formatYAxisTick(d)).join('~')
 }

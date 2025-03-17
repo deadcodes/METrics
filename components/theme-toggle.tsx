@@ -21,9 +21,9 @@ export function ThemeToggle() {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-        <Button className="text-foreground" variant="outline" size="icon" onClick={() => setSelector(!darkMode)}>
-      {darkMode ? (<Sun className="h-[1.2rem] w-[1.2rem] transition-all" />) : (<Moon className="h-[1.2rem] w-[1.2rem] transition-all" />)}
-    </Button>
+          <Button className="text-foreground" variant="outline" size="icon" onClick={() => setSelector(!darkMode)}>
+            {darkMode ? (<Sun className="h-[1.2rem] w-[1.2rem] transition-all" />) : (<Moon className="h-[1.2rem] w-[1.2rem] transition-all" />)}
+          </Button>
         </TooltipTrigger>
         <TooltipContent>
           <p>Switch theme</p>

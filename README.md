@@ -69,3 +69,4 @@ Note: If you are already running a webserver on port 80 (e.g. Macs usually have 
 
 * [ ] Method to generate `items.json` providing an input url
 * [ ] Have page refresh initiated from the server side when logfile updates
+* [ ] More accurate calculation of GP/hr across long durations

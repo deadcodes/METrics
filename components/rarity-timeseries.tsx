@@ -42,7 +42,7 @@ export function RarityTimeSeriesChart({ data: entries }: RarityTimeSeriesChartPr
         // Group entries by timestamp and rarity
         const timeRarityMap = new Map<number, Record<string, number>>()
         const uniqueRarities = new Set<string>()
-    // Define 5-minute interval in seconds
+        // Define 5-minute interval in seconds
         // Process each entry
         for (const entry of entries) {
             const detail = entry.item
@@ -51,7 +51,7 @@ export function RarityTimeSeriesChart({ data: entries }: RarityTimeSeriesChartPr
 
             const rarity = detail.rarity || "Unknown"
             uniqueRarities.add(rarity)
-      // Round timestamp down to nearest 5-minute interval
+            // Round timestamp down to nearest 5-minute interval
             const timestamp = Math.floor(entry.timestamp / INTERVAL) * INTERVAL
 
             if (!timeRarityMap.has(timestamp)) {
@@ -188,18 +188,18 @@ export function RarityTimeSeriesChart({ data: entries }: RarityTimeSeriesChartPr
                     {rarities.map((rarity, index) => {
                         return (
                             <Line
-                            key={`line-${index}`}
-                            dataKey={rarity}
-                            name={rarity}
-                            stroke={getRarityColor(rarity)}
-                            dot={{ r: 0 }}
-                            activeDot={{ r: 3 }}
-                            strokeWidth={1}
+                                key={`line-${index}`}
+                                dataKey={rarity}
+                                name={rarity}
+                                stroke={getRarityColor(rarity)}
+                                dot={{ r: 0 }}
+                                activeDot={{ r: 3 }}
+                                strokeWidth={1}
                             />
                         )
                     }
                     )
-                }
+                    }
 
                     {refAreaLeft && refAreaRight && (
                         <ReferenceArea
