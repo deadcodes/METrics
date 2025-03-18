@@ -33,7 +33,7 @@ export function Dashboard({ dir }: DashboardProps) {
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date())
   const [isDirectoryPromptOpen, setIsDirectoryPromptOpen] = useState(false)
   const [isDirectoryInputOpen, setIsDirectoryInputOpen] = useState(false)
-  const [timeRange, setTimeRange] = useState<TimeRange>({ label: "All", seconds: 0 })
+  const [timeRange, setTimeRange] = useState<TimeRange>({ label: "1 hour", seconds: 3600 })
 
   // Calculate overview metrics from entries
   const overviewMetrics = useMemo(() => {
