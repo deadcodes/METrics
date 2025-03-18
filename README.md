@@ -38,7 +38,7 @@ Copy [env.example](https://github.com/deadcodes/METrics/blob/master/env.example)
 To get started, just clone the repository and run `npm install && npm run dev`:
 
     git clone https://github.com/deadcodes/METrics.git
-    npm install
+    npm install --force
     npm run db:init
     npm run dev
 
@@ -84,7 +84,7 @@ To get started, just clone the repository and run `npm install && npm run dev`:
 
 If you wanted to run this site in production, you should install modules then build the site with `npm run build` and run it with `npm start`:
 
-    npm install
+    npm install --force
     npm run db:init
     npm run build
     npm start
