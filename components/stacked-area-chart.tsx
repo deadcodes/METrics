@@ -104,7 +104,7 @@ export function StackedAreaChart({ entries }: StackedAreaChartProps) {
         },
       },
       labels: {
-        show: true,
+        show: false,
       }
     },
     yaxis: {
