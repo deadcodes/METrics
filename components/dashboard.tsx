@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, useCallback, useMemo } from "react"
+import { useEffect, useState, useMemo } from "react"
 import { FileText, RefreshCw } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
@@ -18,13 +18,12 @@ import { getAllUsersHydratedLogData, getHydratedUserLogData, scanDirectory } fro
 import { ClearLogButton } from "./clear-log-button"
 import { ToastContextProvider } from "./ui/toast-context"
 import { ItemDetails } from "./item-details"
-
 let logfileDir: string
 interface DashboardProps {
   dir: string
 }
 
-export function Dashboard({dir} : DashboardProps) {
+export function Dashboard({ dir }: DashboardProps) {
   const [users, setUsers] = useState<string[]>([])
   const [selectedUser, setSelectedUser] = useState<string>("all") // Default to "all"
   const [entries, setEntries] = useState<HydratedLogEntry[]>([])
@@ -58,6 +57,23 @@ export function Dashboard({dir} : DashboardProps) {
       lastUpdated,
     }
   }, [filteredEntries])
+
+
+  useEffect(() => {
+    const eventSource = new EventSource("/api/sse");
+    eventSource.onmessage = (d) => {
+      console.log('refreshing data')
+      refreshData();
+    };
+
+    eventSource.onerror = () => {
+      eventSource.close();
+    };
+
+    return () => {
+      eventSource.close();
+    };
+  }, []);
 
   // Filter entries based on selected time range
   useEffect(() => {
@@ -256,7 +272,6 @@ export function Dashboard({dir} : DashboardProps) {
                         <span>Directory: {selectedDirectory}</span>
                       </span>
                     )}
-
                   </div>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-2 items-start sm:items-center">
