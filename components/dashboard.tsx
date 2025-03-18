@@ -49,14 +49,14 @@ export function Dashboard({ dir }: DashboardProps) {
     const rawGold = filteredEntries.filter(d => d.itemId === 995)
     const goldValue = rawGold.reduce((sum, entry) => sum + entry.quantity, 0)
     const uniqueItems = new Set(filteredEntries.map((entry) => entry.itemId)).size
-    const lastUpdated = new Date(Math.max(...filteredEntries.map((entry) => entry.timestamp * 1000))).toISOString()
+    // const lastUpdated = new Date(Math.max(...filteredEntries.map((entry) => entry.timestamp * 1000))).toISOString()
     return {
       totalEntries: filteredEntries.length,
       uniqueItems,
       goldValue,
       lastUpdated,
     }
-  }, [filteredEntries])
+  }, [filteredEntries,lastUpdated])
 
 
   useEffect(() => {
@@ -64,6 +64,7 @@ export function Dashboard({ dir }: DashboardProps) {
     eventSource.onmessage = (d) => {
       console.log('refreshing data')
       refreshData();
+      setLastUpdated(new Date())
     };
 
     eventSource.onerror = () => {
