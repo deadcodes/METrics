@@ -54,7 +54,7 @@ export function Dashboard({ dir }: DashboardProps) {
       totalEntries: filteredEntries.length,
       uniqueItems,
       goldValue,
-      lastUpdated,
+      lastUpdated:lastUpdated.toISOString(),
     }
   }, [filteredEntries,lastUpdated])
 
@@ -174,15 +174,15 @@ export function Dashboard({ dir }: DashboardProps) {
     handleUserChange(user)
   }
 
-  useEffect(() => {
-    if (!selectedDirectory) return
+  // useEffect(() => {
+  //   if (!selectedDirectory) return
 
-    const intervalId = setInterval(async () => {
-      await refreshData()
-    }, 300000)
+  //   const intervalId = setInterval(async () => {
+  //     await refreshData()
+  //   }, 300000)
 
-    return () => clearInterval(intervalId)
-  }, [selectedUser, selectedDirectory, refreshData])
+  //   return () => clearInterval(intervalId)
+  // }, [selectedUser, selectedDirectory, refreshData])
 
   const handleLogCleared = async () => {
     await refreshData()
