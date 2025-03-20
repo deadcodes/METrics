@@ -13,7 +13,7 @@ export async function watchDropsFolder(dropsFolder: string) {
 
     // throttled function to prevent multiple calls in rapid succession
     const throttledSend = throttle((filename: string) => {
-        console.log(`File updated: ${filename}, sending update...`);
+        // console.log(`File updated: ${filename}, sending update...`);
         sendDataToClients({ timestamp: Date.now() });
     }, 1000, { leading: false, trailing: true }); // Adjust debounce delay as needed
 

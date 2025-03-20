@@ -1,5 +1,4 @@
 "use server"
-import 'dotenv/config';
 import { drizzle } from 'drizzle-orm/libsql';
 import { eq, sql } from 'drizzle-orm';
 import { ge, items, settings } from './schema';
@@ -8,7 +7,7 @@ import * as lodash from 'lodash';
 import { getAllGEPrices, getRarityColorByPrice } from '@/lib/item-utils';
 const itemsJson: Item[] = require('../items.json')
 
-const db = drizzle(process.env.DB_FILE_NAME!);
+const db = drizzle(process.env.DB_FILE_NAME || 'file:local.db');
 
 export const initDB = async () => {
     console.log('init db')
